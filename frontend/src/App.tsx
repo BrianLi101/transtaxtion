@@ -6,34 +6,13 @@ import logo from './logo.svg';
 import './App.css';
 
 import EtherscanAPI from './managers/EtherscanAPI';
+import { TransactionsPage } from 'src/components/pages/TransactionsPage';
 
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={muiTheme}>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <button
-            onClick={() => {
-              EtherscanAPI.getNormalTransactionsByAddress(
-                process.env.REACT_APP_TEST_WALLET_ADDRESS!
-              );
-            }}
-          >
-            Test Etherscan
-          </button>
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <TransactionsPage />
       </ThemeProvider>
     </div>
   );
