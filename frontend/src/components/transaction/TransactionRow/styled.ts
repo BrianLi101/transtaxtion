@@ -9,8 +9,14 @@ export const TransactionRowContainer = styled.div`
   border-width: 1px;
 `;
 
-export const HorizontalFlexContainer = styled.div`
+export const HFlex = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+`;
+
+export const VFlex = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: space-around;
 `;

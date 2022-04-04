@@ -1,6 +1,5 @@
-import { EtherscanNormalTransaction } from 'src/managers/EtherscanAPI/types';
-
+import { Transaction } from 'src/types/Transaction';
 export interface TransactionRowProps {
   myAddress: string;
-  transaction: EtherscanNormalTransaction;
+  transaction: Transaction;
 }
