@@ -10,7 +10,7 @@ export const getEtherscanLinkForContract = (address: string) => {
  * @returns
  */
 export const getKnownContract = (address: string): Contract | undefined => {
-  return CONTRACT_DICTIONARY[address];
+  return CONTRACT_DICTIONARY[address.toLowerCase()];
 };
 
 export const getReadableNameForKnownContract = (
@@ -39,9 +39,10 @@ export const CONTRACT_DICTIONARY: { [address: string]: Contract } = {
     description:
       'Approving the OpenSea Registry is required before being able to sell NFTs on the platform.',
   },
-  '0x7f268357A8c2552623316e2562D90e642bB538E5': {
-    address: '0x7f268357A8c2552623316e2562D90e642bB538E5',
+  '0x7f268357a8c2552623316e2562d90e642bb538e5': {
+    address: '0x7f268357a8c2552623316e2562d90e642bb538e5',
     orgName: 'OpenSea',
     contractName: 'Wyvern Exchange v2',
+    description: "OpenSea's digital asset exchange for NFTs.",
   },
 };

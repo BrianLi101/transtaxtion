@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon';
 export enum TransactionType {
   /** Transfer between two externally owned accounts */
-  EOAtoEOA = 'EOAtoEOA',
+  EOAtoEOAReceive = 'EOAtoEOAReceive',
+  EOAtoEOASend = 'EOAtoEOASend',
 
+  /** ERC721 (NFTs) */
   ERC721Purchase = 'ERC721Purchase',
   ERC721Sale = 'ERC721Sale',
 }

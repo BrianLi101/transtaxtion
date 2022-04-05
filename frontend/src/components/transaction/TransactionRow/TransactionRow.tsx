@@ -10,6 +10,7 @@ import {
 } from 'src/utils/EthereumUtils';
 
 import { ContractPreview } from '../ContractPreview';
+import { ERC721TxnPreview } from '../ERC721TxnPreview';
 import { EthTxnPreview } from '../EthTxnPreview';
 import { GasPreview } from '../GasPreview';
 import { TransactionTypePreview } from '../TransactionTypePreview';
@@ -72,13 +73,10 @@ export const TransactionRow = ({
         <p>{transaction.timeStamp.toString()}</p>
         <p>{transaction.transactionType}</p>
         <p>{signMultiplier * parseFloat(transaction.etherValue.toFixed(3))}</p>
-        <p>{getShortenedEthereumAddress(myAddress, 12, 'middle')}</p>
       </HFlex>
       <HFlex>
-        <p>{transaction.from}</p>
         <ContractPreview address={transaction.from} />
         <p>{inOrOut}</p>
-        <p>{transaction.to}</p>
         <ContractPreview address={transaction.to} />
         <p>{transaction.contractAddress}</p>
         <ContractPreview address={transaction.contractAddress} />
@@ -94,7 +92,16 @@ export const TransactionRow = ({
           ethPriceInUSD={transaction.ethPriceInUSD}
         />
       </HFlex>
-      <p>{JSON.stringify(transaction)}</p>
+      {transaction.erc721TransactionData && (
+        <ERC721TxnPreview
+          tokenID={transaction.erc721TransactionData.tokenID}
+          contractAddress={transaction.erc721TransactionData.contractAddress}
+          tokenName={transaction.erc721TransactionData.tokenName}
+          tokenSymbol={transaction.erc721TransactionData.tokenSymbol}
+        />
+      )}
+      {/* <p>{JSON.stringify(transaction)}</p> */}
+      <p>input: {transaction.input}</p>
     </TransactionRowContainer>
   );
 };

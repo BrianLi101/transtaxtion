@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import _ from 'lodash';
 
 import { Transaction, TransactionType } from 'src/types/Transaction';
-import { weiToEther } from 'src/utils/EthereumUtils';
+import { weiToEther, isSameEthereumAddress } from 'src/utils/EthereumUtils';
 
 import {
   EtherscanModules,
@@ -38,7 +38,8 @@ class EtherscanAPI {
           this.convertEtherscanDataToFormattedTransactions(
             normalTransactions.result,
             internalTransactions.result,
-            erc721TransferEvents.result
+            erc721TransferEvents.result,
+            address
           );
         resolve(formattedTransactions);
       } catch (err) {
@@ -155,7 +156,8 @@ class EtherscanAPI {
   private convertEtherscanDataToFormattedTransactions = (
     normalTransactions: EtherscanNormalTransaction[],
     internalTransactions: EtherscanInternalTransaction[],
-    erc721TransferEvents: EtherscanERC721TransferEvent[]
+    erc721TransferEvents: EtherscanERC721TransferEvent[],
+    myAddress: string
   ): Transaction[] => {
     let formattedTransactions: Transaction[] = [];
 
@@ -186,6 +188,17 @@ class EtherscanAPI {
             transaction.transactionType = TransactionType.ERC721Purchase;
           }
         });
+
+        if (!transaction.transactionType) {
+          // MetaMask send/receive event input, not clear if Coinbase and other platforms are the same
+          if (transaction.input === '0x') {
+            if (isSameEthereumAddress(transaction.to, myAddress)) {
+              transaction.transactionType = TransactionType.EOAtoEOAReceive;
+            } else {
+              transaction.transactionType = TransactionType.EOAtoEOASend;
+            }
+          }
+        }
       }
 
       formattedTransactions.push(transaction);

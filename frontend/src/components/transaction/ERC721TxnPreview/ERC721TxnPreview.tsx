@@ -1,14 +1,16 @@
 import { HFlex, VFlex } from 'src/components/general';
 import { Caption, Headline } from 'src/components/general';
 
+import { NFTIcon } from 'src/components/nfts/NFTIcon';
+
 import { ERC721TxnPreviewProps } from './types';
 
-export const NFTPreview = ({
+export const ERC721TxnPreview = ({
   contractAddress,
   tokenID,
   tokenName,
   tokenSymbol,
-  iconSize,
+  iconSize = 40,
 }: ERC721TxnPreviewProps) => {
   return (
     <HFlex style={{ alignItems: 'center' }}>
@@ -18,12 +20,12 @@ export const NFTPreview = ({
           {tokenSymbol} #{tokenID}
         </Headline>
       </VFlex>
-      {/* <img
-        src={EthIcon}
-        height={iconSize}
-        width={iconSize}
+      <NFTIcon
+        address={contractAddress}
+        id={tokenID}
+        size={iconSize}
         style={{ margin: 10 }}
-      /> */}
+      />
     </HFlex>
   );
 };

@@ -1,0 +1,1 @@
+export { NFTIcon } from './NFTIcon';

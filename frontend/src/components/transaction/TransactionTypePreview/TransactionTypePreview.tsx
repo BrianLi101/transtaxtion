@@ -8,6 +8,12 @@ export const TransactionTypePreview = ({
 }: TransactionTypePreviewProps) => {
   let transactionTypeString = 'Unknown';
   switch (type) {
+    case TransactionType.EOAtoEOAReceive:
+      transactionTypeString = 'Receive';
+      break;
+    case TransactionType.EOAtoEOASend:
+      transactionTypeString = 'Send';
+      break;
     case TransactionType.ERC721Purchase:
       transactionTypeString = 'NFT Purchase';
       break;
