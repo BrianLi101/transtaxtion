@@ -5,7 +5,6 @@ import { muiTheme } from 'src/styling/MUITheme';
 import logo from './logo.svg';
 import './App.css';
 
-import EtherscanAPI from './managers/EtherscanAPI';
 import { TransactionsPage } from 'src/components/pages/TransactionsPage';
 
 function App() {

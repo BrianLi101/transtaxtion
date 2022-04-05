@@ -2,12 +2,17 @@ import { DateTime } from 'luxon';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
+import { Contract } from 'src/types/Contract';
+import { getKnownContract } from 'src/utils/ContractUtils';
 import {
   isSameEthereumAddress,
   getShortenedEthereumAddress,
 } from 'src/utils/EthereumUtils';
 
+import { ContractPreview } from '../ContractPreview';
+import { EthTxnPreview } from '../EthTxnPreview';
 import { GasPreview } from '../GasPreview';
+import { TransactionTypePreview } from '../TransactionTypePreview';
 
 import { TransactionRowContainer, HFlex, VFlex } from './styled';
 import { TransactionRowProps } from './types';
@@ -20,12 +25,35 @@ export const TransactionRow = ({
   let inOrOut = fromMe ? 'Out' : 'In';
   let signMultiplier = fromMe ? -1 : 1;
 
+  let otherAddress = fromMe ? transaction.from : transaction.to;
+  let otherAddressContractInfo: Contract | undefined;
+  if (otherAddress) {
+    otherAddressContractInfo = getKnownContract(otherAddress);
+  }
+
   const renderOut = () => {
+    let leftHalf: React.ReactNode | undefined;
+    let rightHalf: React.ReactNode | undefined;
     if (fromMe && transaction.etherValue) {
+      leftHalf = (
+        <EthTxnPreview
+          value={transaction.etherValue}
+          ethPriceInUSD={transaction.ethPriceInUSD}
+        />
+      );
     }
+    const columnStyle: React.CSSProperties = {
+      flex: 1,
+    };
     return (
-      <HFlex>
+      <HFlex style={{ flex: 1, alignItems: 'center' }}>
+        <VFlex style={{ ...columnStyle, alignItems: 'flex-end' }}>
+          {leftHalf}
+        </VFlex>
         <ArrowForwardRoundedIcon />
+        <VFlex style={{ ...columnStyle, alignItems: 'flex-start' }}>
+          {rightHalf}
+        </VFlex>
       </HFlex>
     );
   };
@@ -48,25 +76,23 @@ export const TransactionRow = ({
       </HFlex>
       <HFlex>
         <p>{transaction.from}</p>
+        <ContractPreview address={transaction.from} />
         <p>{inOrOut}</p>
         <p>{transaction.to}</p>
+        <ContractPreview address={transaction.to} />
         <p>{transaction.contractAddress}</p>
+        <ContractPreview address={transaction.contractAddress} />
       </HFlex>
       <HFlex>
-        <p>{transaction.gas}</p>
-        <p>{transaction.gasPrice}</p>
-        <p>{transaction.gasUsed}</p>
-        <p>
-          {parseInt(transaction.gasPrice || '0') *
-            parseInt(transaction.gasUsed)}
-        </p>
-      </HFlex>
-      <HFlex>
+        <TransactionTypePreview type={transaction.transactionType} />
         <VFlex style={{ flex: 1 }}>
           {renderOut()}
           {renderIn()}
         </VFlex>
-        <GasPreview transactionFee={transaction.transactionFee || 0} />
+        <GasPreview
+          transactionFee={transaction.transactionFee || 0}
+          ethPriceInUSD={transaction.ethPriceInUSD}
+        />
       </HFlex>
       <p>{JSON.stringify(transaction)}</p>
     </TransactionRowContainer>

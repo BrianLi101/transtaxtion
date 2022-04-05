@@ -22,7 +22,11 @@ export interface Transaction {
   gas: string;
   gasPrice?: string;
   gasUsed: string;
+
+  /** calculated property for the transaction fee (gasPrice * gasUsed) */
   transactionFee?: number;
+
+  ethPriceInUSD?: number;
 
   erc721TransactionData?: any;
 }

@@ -159,6 +159,8 @@ class EtherscanAPI {
   ): Transaction[] => {
     let formattedTransactions: Transaction[] = [];
 
+    const SUBSTITUTE_ETHEREUM_PRICE = 3500.22;
+
     normalTransactions.forEach((normalTx) => {
       let dateTime = DateTime.fromSeconds(parseInt(normalTx.timeStamp));
       let etherValue = weiToEther(parseFloat(normalTx.value));
@@ -173,6 +175,7 @@ class EtherscanAPI {
         etherValue,
         normalOrInternal: 'normal',
         transactionFee,
+        ethPriceInUSD: SUBSTITUTE_ETHEREUM_PRICE,
       };
 
       // if the transaction has a value, it could be a erc721 purchase
@@ -196,6 +199,7 @@ class EtherscanAPI {
         timeStamp: dateTime,
         etherValue,
         normalOrInternal: 'internal',
+        ethPriceInUSD: SUBSTITUTE_ETHEREUM_PRICE,
       };
 
       // if the transaction has a value, it could be a erc721 purchase
