@@ -8,15 +8,21 @@ import {
   getKnownContract,
   getReadableNameForKnownContract,
 } from 'src/utils/ContractUtils';
+import { isSameEthereumAddress } from 'src/utils/EthereumUtils';
 
-import { ContractPreviewProps } from './types';
+import { AddressPreviewProps } from './types';
 
-export const ContractPreview = ({ address }: ContractPreviewProps) => {
+export const AddressPreview = ({ address, myAddress }: AddressPreviewProps) => {
   if (!address) return null;
 
   let contract = getKnownContract(address);
   let readableName: string =
     getReadableNameForKnownContract(address) || address;
+  const isMyWalletAddress =
+    myAddress && isSameEthereumAddress(address, myAddress);
+  if (isMyWalletAddress) {
+    readableName = 'My Wallet';
+  }
   let tooltipTitle: string = '';
 
   if (contract && contract.description) {
@@ -30,6 +36,9 @@ export const ContractPreview = ({ address }: ContractPreviewProps) => {
       <Tooltip title={tooltipTitle}>
         <Chip
           label={readableName}
+          style={{
+            backgroundColor: isMyWalletAddress ? 'lightblue' : 'lightgray',
+          }}
           onClick={() => {
             window.open(getEtherscanLinkForContract(address), '_blank');
           }}

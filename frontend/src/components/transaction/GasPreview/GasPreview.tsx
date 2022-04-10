@@ -3,7 +3,7 @@ import { GasPreviewProps } from './types';
 import { VFlex } from 'src/components/general';
 import { weiToEther } from 'src/utils/EthereumUtils';
 
-import { Caption } from 'src/components/general';
+import { Headline, Caption } from 'src/components/general';
 
 export const GasPreview = ({
   transactionFee,
@@ -20,7 +20,8 @@ export const GasPreview = ({
 
   return (
     <VFlex>
-      <p>{usdTransactionFee}</p>
+      <Caption>Gas</Caption>
+      <Headline>{usdTransactionFee}</Headline>
       <Caption>
         {etherTransactionFeeAbbrev}
         {' Ether'}

@@ -9,7 +9,8 @@ import {
   getShortenedEthereumAddress,
 } from 'src/utils/EthereumUtils';
 
-import { ContractPreview } from '../ContractPreview';
+import { AddressPreview } from '../AddressPreview';
+import { DatePreview } from '../DatePreview';
 import { ERC721TxnPreview } from '../ERC721TxnPreview';
 import { EthTxnPreview } from '../EthTxnPreview';
 import { GasPreview } from '../GasPreview';
@@ -32,76 +33,130 @@ export const TransactionRow = ({
     otherAddressContractInfo = getKnownContract(otherAddress);
   }
 
-  const renderOut = () => {
-    let leftHalf: React.ReactNode | undefined;
-    let rightHalf: React.ReactNode | undefined;
-    if (fromMe && transaction.etherValue) {
-      leftHalf = (
-        <EthTxnPreview
-          value={transaction.etherValue}
-          ethPriceInUSD={transaction.ethPriceInUSD}
-        />
+  const renderOutTxn = () => {
+    let txnNodes: React.ReactNode[] = [];
+
+    if (fromMe && transaction.etherValue > 0) {
+      let ethTransaction = (
+        <HFlex style={{ alignItems: 'center' }}>
+          <EthTxnPreview
+            value={transaction.etherValue}
+            ethPriceInUSD={transaction.ethPriceInUSD}
+          />
+          <ArrowForwardRoundedIcon />
+        </HFlex>
       );
+      txnNodes.push(ethTransaction);
     }
-    const columnStyle: React.CSSProperties = {
-      flex: 1,
-    };
+
+    const { erc721TransactionData } = transaction;
+    if (
+      !fromMe &&
+      erc721TransactionData &&
+      isSameEthereumAddress(erc721TransactionData.from, myAddress)
+    ) {
+      let erc721Transaction = (
+        <HFlex style={{ alignItems: 'center' }}>
+          <ERC721TxnPreview
+            tokenID={erc721TransactionData.tokenID}
+            contractAddress={erc721TransactionData.contractAddress}
+            tokenName={erc721TransactionData.tokenName}
+            tokenSymbol={erc721TransactionData.tokenSymbol}
+          />
+          <ArrowForwardRoundedIcon />
+        </HFlex>
+      );
+      txnNodes.push(erc721Transaction);
+    }
+
     return (
-      <HFlex style={{ flex: 1, alignItems: 'center' }}>
-        <VFlex style={{ ...columnStyle, alignItems: 'flex-end' }}>
-          {leftHalf}
-        </VFlex>
-        <ArrowForwardRoundedIcon />
-        <VFlex style={{ ...columnStyle, alignItems: 'flex-start' }}>
-          {rightHalf}
-        </VFlex>
-      </HFlex>
+      <VFlex style={{ width: '100%', alignItems: 'flex-end' }}>
+        {txnNodes.map((n) => n)}
+      </VFlex>
     );
   };
 
-  const renderIn = () => {
+  const renderInTxn = () => {
+    let txnNodes: React.ReactNode[] = [];
+
+    if (!fromMe && transaction.etherValue > 0) {
+      let ethTransaction = (
+        <HFlex style={{ alignItems: 'center' }}>
+          <EthTxnPreview
+            value={transaction.etherValue}
+            ethPriceInUSD={transaction.ethPriceInUSD}
+          />
+          <ArrowBackRoundedIcon />
+        </HFlex>
+      );
+      txnNodes.push(ethTransaction);
+    }
+
+    const { erc721TransactionData } = transaction;
+    if (
+      fromMe &&
+      erc721TransactionData &&
+      isSameEthereumAddress(erc721TransactionData.to, myAddress)
+    ) {
+      let erc721Transaction = (
+        <HFlex style={{ alignItems: 'center' }}>
+          <ERC721TxnPreview
+            tokenID={erc721TransactionData.tokenID}
+            contractAddress={erc721TransactionData.contractAddress}
+            tokenName={erc721TransactionData.tokenName}
+            tokenSymbol={erc721TransactionData.tokenSymbol}
+          />
+          <ArrowBackRoundedIcon />
+        </HFlex>
+      );
+      txnNodes.push(erc721Transaction);
+    }
+
     return (
-      <HFlex>
-        <ArrowBackRoundedIcon />
-      </HFlex>
+      <VFlex style={{ width: '100%', alignItems: 'flex-end' }}>
+        {txnNodes.map((n) => n)}
+      </VFlex>
     );
   };
 
   return (
     <TransactionRowContainer>
-      <HFlex>
+      {/* <HFlex>
         <p>{transaction.timeStamp.toString()}</p>
         <p>{transaction.transactionType}</p>
         <p>{signMultiplier * parseFloat(transaction.etherValue.toFixed(3))}</p>
-      </HFlex>
+      </HFlex> */}
+
       <HFlex>
-        <ContractPreview address={transaction.from} />
-        <p>{inOrOut}</p>
-        <ContractPreview address={transaction.to} />
-        <p>{transaction.contractAddress}</p>
-        <ContractPreview address={transaction.contractAddress} />
-      </HFlex>
-      <HFlex>
-        <TransactionTypePreview type={transaction.transactionType} />
+        <HFlex style={{ flex: 1 }}>
+          <DatePreview timestamp={transaction.timeStamp} />
+        </HFlex>
         <VFlex style={{ flex: 1 }}>
-          {renderOut()}
-          {renderIn()}
+          <TransactionTypePreview type={transaction.transactionType} />
         </VFlex>
-        <GasPreview
-          transactionFee={transaction.transactionFee || 0}
-          ethPriceInUSD={transaction.ethPriceInUSD}
-        />
+        <VFlex style={{ flex: 3, alignItems: 'center' }}>
+          {/* <AddressPreview
+            address={fromMe ? transaction.from : transaction.to}
+            myAddress={myAddress}
+          /> */}
+          {fromMe ? renderOutTxn() : renderInTxn()}
+          {fromMe ? renderInTxn() : renderOutTxn()}
+        </VFlex>
+        <VFlex style={{ flex: 3, paddingLeft: 20 }}>
+          <AddressPreview
+            address={fromMe ? transaction.to : transaction.from}
+            myAddress={myAddress}
+          />
+        </VFlex>
+        <VFlex style={{ flex: 1 }}>
+          <GasPreview
+            transactionFee={transaction.transactionFee || 0}
+            ethPriceInUSD={transaction.ethPriceInUSD}
+          />
+        </VFlex>
       </HFlex>
-      {transaction.erc721TransactionData && (
-        <ERC721TxnPreview
-          tokenID={transaction.erc721TransactionData.tokenID}
-          contractAddress={transaction.erc721TransactionData.contractAddress}
-          tokenName={transaction.erc721TransactionData.tokenName}
-          tokenSymbol={transaction.erc721TransactionData.tokenSymbol}
-        />
-      )}
       {/* <p>{JSON.stringify(transaction)}</p> */}
-      <p>input: {transaction.input}</p>
+      {/* <p>input: {transaction.input}</p> */}
     </TransactionRowContainer>
   );
 };

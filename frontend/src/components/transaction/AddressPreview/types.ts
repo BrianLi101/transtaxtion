@@ -1,5 +1,6 @@
 import { Contract } from 'src/types/Contract';
 
-export interface ContractPreviewProps {
+export interface AddressPreviewProps {
   address: string;
+  myAddress?: string;
 }

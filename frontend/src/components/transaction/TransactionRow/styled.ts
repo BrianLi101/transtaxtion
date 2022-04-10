@@ -7,6 +7,8 @@ export const TransactionRowContainer = styled.div`
   border-color: lightgray;
   border-style: solid;
   border-width: 1px;
+  padding: 10px;
+  margin: 10px;
 `;
 
 export const HFlex = styled.div`

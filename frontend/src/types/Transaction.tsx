@@ -30,5 +30,20 @@ export interface Transaction {
 
   ethPriceInUSD?: number;
 
-  erc721TransactionData?: any;
+  erc721TransactionData?: ERC721Transaction;
+}
+
+/**
+ * https://docs.etherscan.io/api-endpoints/accounts#get-a-list-of-erc721-token-transfer-events-by-address
+ */
+export interface ERC721Transaction {
+  blockNumber: string;
+  hash: string;
+  from: string;
+  contractAddress: string;
+  to: string;
+  tokenID: string;
+  tokenName: string;
+  tokenSymbol: string;
+  tokenDecimal: string;
 }

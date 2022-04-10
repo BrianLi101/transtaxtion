@@ -1,4 +1,4 @@
-import { Headline, VFlex } from 'src/components/general';
+import { Headline, Caption, VFlex } from 'src/components/general';
 import { TransactionType } from 'src/types/Transaction';
 
 import { TransactionTypePreviewProps } from './types';
@@ -6,7 +6,7 @@ import { TransactionTypePreviewProps } from './types';
 export const TransactionTypePreview = ({
   type,
 }: TransactionTypePreviewProps) => {
-  let transactionTypeString = 'Unknown';
+  let transactionTypeString = 'Contract';
   switch (type) {
     case TransactionType.EOAtoEOAReceive:
       transactionTypeString = 'Receive';
@@ -25,6 +25,7 @@ export const TransactionTypePreview = ({
   return (
     <VFlex>
       <Headline>{transactionTypeString}</Headline>
+      {transactionTypeString === 'Contract' && <Caption>Unknown Type</Caption>}
     </VFlex>
   );
 };
