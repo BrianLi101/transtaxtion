@@ -15,7 +15,7 @@ export const ERC721TxnPreview = ({
   return (
     <HFlex style={{ alignItems: 'center' }}>
       <VFlex>
-        <Caption>{tokenName}</Caption>
+        <Caption>NFT {tokenName}</Caption>
         <Headline>
           {tokenSymbol} #{tokenID}
         </Headline>

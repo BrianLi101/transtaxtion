@@ -1,2 +1,2 @@
 export { HFlex, VFlex } from './Div';
-export { Caption, Headline } from './Text';
+export { Body, Caption, Headline } from './Text';

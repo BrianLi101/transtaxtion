@@ -8,12 +8,14 @@ import {
   isSameEthereumAddress,
   getShortenedEthereumAddress,
 } from 'src/utils/EthereumUtils';
+import { TaxableIcon } from 'src/components/icons/TaxableIcon';
 
 import { AddressPreview } from '../AddressPreview';
 import { DatePreview } from '../DatePreview';
 import { ERC721TxnPreview } from '../ERC721TxnPreview';
 import { EthTxnPreview } from '../EthTxnPreview';
 import { GasPreview } from '../GasPreview';
+import { TaxInfoPreview } from '../TaxInfoPreview';
 import { TransactionTypePreview } from '../TransactionTypePreview';
 
 import { TransactionRowContainer, HFlex, VFlex } from './styled';
@@ -128,10 +130,10 @@ export const TransactionRow = ({
       </HFlex> */}
 
       <HFlex>
-        <HFlex style={{ flex: 1 }}>
+        <VFlex
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
           <DatePreview timestamp={transaction.timeStamp} />
-        </HFlex>
-        <VFlex style={{ flex: 1 }}>
           <TransactionTypePreview type={transaction.transactionType} />
         </VFlex>
         <VFlex style={{ flex: 3, alignItems: 'center' }}>
@@ -157,6 +159,7 @@ export const TransactionRow = ({
       </HFlex>
       {/* <p>{JSON.stringify(transaction)}</p> */}
       {/* <p>input: {transaction.input}</p> */}
+      <TaxInfoPreview show transaction={transaction} />
     </TransactionRowContainer>
   );
 };

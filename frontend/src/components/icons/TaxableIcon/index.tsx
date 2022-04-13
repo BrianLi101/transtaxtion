@@ -1,0 +1,1 @@
+export { TaxableIcon } from './TaxableIcon';
