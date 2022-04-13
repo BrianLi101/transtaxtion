@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Button, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import EtherscanAPI from 'src/managers/EtherscanAPI';
@@ -7,6 +7,7 @@ import { EtherscanNormalTransaction } from 'src/managers/EtherscanAPI/types';
 import { Transaction } from 'src/types/Transaction';
 
 import { Header } from 'src/components/header';
+import { PageColumn } from 'src/components/general';
 
 import { TransactionRow } from 'src/components/transaction/TransactionRow';
 
@@ -18,13 +19,34 @@ export const TransactionsPage: React.FC = () => {
   const [nftTransfers, setNFTTransfers] = useState<any[]>();
   const [transactions, setTransactions] = useState<Transaction[]>();
 
+  const [loading, setLoading] = useState<boolean>(false);
   const { address } = useParams();
-
   let walletAddress = address!;
+
+  useEffect(() => {
+    if (address) {
+      setLoading(true);
+      EtherscanAPI.getFormattedTransactionsByAddress(address)
+        .then((data) => {
+          setTransactions(data);
+          console.log(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
+  }, [address]);
+
   return (
     <Page>
       <Header />
-      <Button
+      {loading && (
+        <PageColumn style={{ alignItems: 'center' }}>
+          <CircularProgress />
+        </PageColumn>
+      )}
+      {/* <Button
         onClick={() => {
           EtherscanAPI.getNormalTransactionsByAddress(walletAddress).then(
             (data) => {
@@ -72,7 +94,7 @@ export const TransactionsPage: React.FC = () => {
         }}
       >
         Get All
-      </Button>
+      </Button> */}
 
       {normalTransactions?.map((t) => {
         return <p>{JSON.stringify(t)}</p>;

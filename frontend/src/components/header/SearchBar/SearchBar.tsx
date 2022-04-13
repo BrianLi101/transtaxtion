@@ -17,7 +17,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({ loading, style }) => {
   let navigate = useNavigate();
 
   const search = () => {
-    navigate('/address/' + input);
+    // guard against ENS addresses
+    if (input?.indexOf('0x') === -1 || input?.indexOf('.eth') !== -1) {
+      alert('Please use a 0x address format');
+    } else {
+      navigate('/address/' + input);
+    }
   };
 
   return (
