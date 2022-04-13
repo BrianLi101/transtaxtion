@@ -25,7 +25,7 @@ export const TransactionTypePreview = ({
   return (
     <VFlex>
       <Headline>{transactionTypeString}</Headline>
-      {transactionTypeString === 'Contract' && <Caption>Unknown Type</Caption>}
+      {/* {transactionTypeString === 'Contract' && <Caption>Unknown Type</Caption>} */}
     </VFlex>
   );
 };

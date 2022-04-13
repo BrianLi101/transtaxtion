@@ -129,12 +129,14 @@ export const TransactionRow = ({
         <p>{signMultiplier * parseFloat(transaction.etherValue.toFixed(3))}</p>
       </HFlex> */}
 
-      <HFlex>
+      <HFlex style={{ paddingTop: 10, paddingBottom: 10, minHeight: 100 }}>
         <VFlex
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}
         >
           <DatePreview timestamp={transaction.timeStamp} />
-          <TransactionTypePreview type={transaction.transactionType} />
+          <VFlex style={{ flex: 1 }}>
+            <TransactionTypePreview type={transaction.transactionType} />
+          </VFlex>
         </VFlex>
         <VFlex style={{ flex: 3, alignItems: 'center' }}>
           {/* <AddressPreview

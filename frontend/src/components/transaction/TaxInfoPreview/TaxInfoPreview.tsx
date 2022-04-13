@@ -1,4 +1,11 @@
-import { Chip } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary as MuiAccordionSummary,
+  Chip,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 import { HFlex, VFlex, Body, Caption, Headline } from 'src/components/general';
 
@@ -7,6 +14,29 @@ import { TaxableEvent, GasInfo } from 'src/types/TaxableEvent';
 
 import { TaxInfoPreviewContainer } from './styled';
 import { TaxInfoPreviewProps } from './types';
+
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<KeyboardArrowDownRoundedIcon />}
+    {...props}
+  />
+))(({ theme }) => ({
+  // backgroundColor: 'lightcyan',
+  minHeight: 0,
+  borderRadius: 10,
+  '& .MuiAccordionSummary-root': {
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+  },
+  '& .MuiAccordionSummary-content': {
+    margin: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexGrow: 0,
+  },
+}));
 
 export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
   if (!show) return null;
@@ -58,7 +88,7 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
       explanation: 'It depends.',
     };
 
-    let gasChipColor = 'lightgray';
+    let gasChipColor = 'lightskyblue';
     switch (gasInfo.answer) {
       case 'Yes':
         gasChipColor = 'aquamarine';
@@ -81,8 +111,8 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
     );
   };
 
-  return (
-    <TaxInfoPreviewContainer>
+  const renderBody = () => {
+    return (
       <HFlex>
         <VFlex style={{ flex: 3, alignItems: 'flex-start' }}>
           {renderTitle('Taxable Events')}
@@ -96,6 +126,32 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
           {renderGasInfo()}
         </VFlex>
       </HFlex>
+    );
+  };
+
+  return (
+    <TaxInfoPreviewContainer>
+      <Accordion
+        disableGutters
+        style={{ boxShadow: 'none', padding: 0, margin: 0 }}
+        TransitionProps={{ unmountOnExit: true }}
+      >
+        <AccordionSummary
+        // style={{ minHeight: 0, backgroundColor: 'lightgray' }}
+        >
+          <Caption>Tax Info</Caption>
+        </AccordionSummary>
+        <AccordionDetails style={{}}>
+          <div
+            style={{
+              height: 1,
+              backgroundColor: 'lightgray',
+              marginBottom: 20,
+            }}
+          />
+          {renderBody()}
+        </AccordionDetails>
+      </Accordion>
     </TaxInfoPreviewContainer>
   );
 };

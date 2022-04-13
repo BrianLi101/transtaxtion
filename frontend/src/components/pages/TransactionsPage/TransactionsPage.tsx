@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Button } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import EtherscanAPI from 'src/managers/EtherscanAPI';
 import { EtherscanNormalTransaction } from 'src/managers/EtherscanAPI/types';
 import { Transaction } from 'src/types/Transaction';
+
+import { Header } from 'src/components/header';
 
 import { TransactionRow } from 'src/components/transaction/TransactionRow';
 
@@ -15,9 +18,12 @@ export const TransactionsPage: React.FC = () => {
   const [nftTransfers, setNFTTransfers] = useState<any[]>();
   const [transactions, setTransactions] = useState<Transaction[]>();
 
-  let walletAddress = process.env.REACT_APP_TEST_WALLET_ADDRESS!;
+  const { address } = useParams();
+
+  let walletAddress = address!;
   return (
     <Page>
+      <Header />
       <Button
         onClick={() => {
           EtherscanAPI.getNormalTransactionsByAddress(walletAddress).then(
