@@ -6,7 +6,6 @@ export const Footer = () => {
   return (
     <FooterContainer>
       <Typography>
-        built by{' '}
         <Link
           href="https://twitter.com/brianli101"
           target="_blank"
@@ -22,6 +21,14 @@ export const Footer = () => {
           style={{ textDecoration: 'none' }}
         >
           @etherscan
+        </Link>
+        <span style={{ marginLeft: 5, marginRight: 5 }}>❤️</span>
+        <Link
+          href="https://github.com/BrianLi101/transtaxtion"
+          target="_blank"
+          style={{ textDecoration: 'none' }}
+        >
+          GitHub
         </Link>
       </Typography>
     </FooterContainer>
