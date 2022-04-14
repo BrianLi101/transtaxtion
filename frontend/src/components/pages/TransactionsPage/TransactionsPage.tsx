@@ -26,6 +26,7 @@ export const TransactionsPage: React.FC = () => {
   useEffect(() => {
     if (address) {
       setLoading(true);
+      setTransactions([]);
       EtherscanAPI.getFormattedTransactionsByAddress(address)
         .then((data) => {
           setTransactions(data);
@@ -105,15 +106,17 @@ export const TransactionsPage: React.FC = () => {
       {nftTransfers?.map((t) => {
         return <p>{JSON.stringify(t)}</p>;
       })}
-      {transactions?.map((t) => {
-        return (
-          <TransactionRow
-            key={t.hash}
-            transaction={t}
-            myAddress={walletAddress}
-          />
-        );
-      })}
+      <PageColumn style={{ width: '90%', minWidth: 1000 }}>
+        {transactions?.map((t) => {
+          return (
+            <TransactionRow
+              key={t.hash}
+              transaction={t}
+              myAddress={walletAddress}
+            />
+          );
+        })}
+      </PageColumn>
     </Page>
   );
 };

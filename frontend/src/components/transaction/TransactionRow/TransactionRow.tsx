@@ -122,14 +122,24 @@ export const TransactionRow = ({
   };
 
   return (
-    <TransactionRowContainer>
+    <TransactionRowContainer
+    // onClick={() => {
+    //   console.log(transaction);
+    // }}
+    >
       {/* <HFlex>
         <p>{transaction.timeStamp.toString()}</p>
         <p>{transaction.transactionType}</p>
         <p>{signMultiplier * parseFloat(transaction.etherValue.toFixed(3))}</p>
       </HFlex> */}
 
-      <HFlex style={{ paddingTop: 10, paddingBottom: 10, minHeight: 100 }}>
+      <HFlex
+        style={{
+          paddingTop: 10,
+          paddingBottom: 10,
+          minHeight: 100,
+        }}
+      >
         <VFlex
           style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}
         >

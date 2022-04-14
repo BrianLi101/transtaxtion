@@ -229,7 +229,7 @@ class EtherscanAPI {
     });
 
     console.log(formattedTransactions);
-    return _.orderBy(formattedTransactions, ['timeStamp']);
+    return _.orderBy(formattedTransactions, ['timeStamp'], ['desc']);
   };
 }
 
