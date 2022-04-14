@@ -102,6 +102,11 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
         />
         <Body style={{ fontWeight: 'normal' }}>
           We don't the tax status of this particular type of transaction.
+          Generally, the following types of contract interactions are taxable:
+          <br />• Any form of purchase using a cryptocurrency
+          <br />• Token swaps (e.g. ETH to USDC on Uniswap)
+          <br />• Most DeFi contract interactions involving the movement of an
+          asset
         </Body>
       </VFlex>
     );
@@ -110,8 +115,17 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
   const renderGasInfo = () => {
     let gasInfo: GasInfo = taxableEventInfo?.gasInfo || {
       answer: 'Maybe',
-      explanation: 'It depends.',
+      explanation:
+        'Gas fees can generally be applied to the cost basis of the following types of transactions: buying/selling an asset (ETH, NFTs), trades or swaps (Uniswap), or claiming rewards (staking, airdrops).',
+      link: 'https://tokentax.co/blog/are-ethereum-gas-fees-tax-deductible',
     };
+
+    let onClick;
+    if (gasInfo.link) {
+      onClick = () => {
+        window.open(gasInfo.link, '_blank');
+      };
+    }
 
     let gasChipColor = 'lightskyblue';
     switch (gasInfo.answer) {
@@ -135,6 +149,7 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
             }}
             // variant="outlined"
             size="small"
+            onClick={onClick}
           />
           {gasInfo.explanation}
         </Body>

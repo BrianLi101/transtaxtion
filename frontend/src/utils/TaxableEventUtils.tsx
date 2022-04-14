@@ -28,7 +28,8 @@ const TRANSACTION_TYPE_TO_TAXABLE_EVENT_DICTIONARY: {
     taxableEvents: [TAXABLE_EVENT_DICTIONARY[TaxableEventType.SENT_ETH]],
     gasInfo: {
       answer: 'Maybe',
-      explanation: 'To be completed later.',
+      explanation: `The IRS has not issued clear guidance on the gas fees of wallet to wallet transfers, but the safe recommendation is to not apply it to the cost basis. Generally, fees can only be applied to the cost basis of property if it (1) is a necessary part of buying/selling or (2) increases the underlying value.`,
+      link: 'https://cryptotrader.tax/blog/ethereum-gas-fees',
     },
   },
   [TransactionType.ERC721Purchase]: {
