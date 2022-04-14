@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -39,7 +40,10 @@ const AccordionSummary = styled((props) => (
 }));
 
 export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
-  if (!show) return null;
+  const [showTaxInfo, setShowTaxInfo] = useState<boolean>(!!show);
+  useEffect(() => {
+    setShowTaxInfo(!!show);
+  }, [show]);
 
   let taxableEventInfo =
     transaction.transactionType &&
@@ -54,19 +58,28 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
   };
 
   const renderTaxableEvent = (taxableEvent: TaxableEvent) => {
+    let onClick;
+    if (taxableEvent.link) {
+      onClick = () => {
+        window.open(taxableEvent.link, '_blank');
+      };
+    }
     return (
       <VFlex style={{ alignItems: 'flex-start' }}>
-        <Body style={{ fontWeight: 'bold' }}>{taxableEvent.type}</Body>
+        <Chip
+          label={taxableEvent.type}
+          style={{
+            backgroundColor: 'lightsteelblue',
+            marginRight: 5,
+            borderRadius: 5,
+            fontWeight: 'bold',
+          }}
+          size="small"
+          onClick={onClick}
+        />
         <Body style={{ fontWeight: 'normal' }}>{taxableEvent.explanation}</Body>
 
         {taxableEvent.example && <Caption>{taxableEvent.example}</Caption>}
-        {taxableEvent.link && (
-          <Caption>
-            <a href={taxableEvent.link} target="_blank" rel="noreferrer">
-              more
-            </a>
-          </Caption>
-        )}
       </VFlex>
     );
   };
@@ -74,7 +87,19 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
   const renderDefaultTaxableEvent = () => {
     return (
       <VFlex style={{ alignItems: 'flex-start' }}>
-        <Body style={{ fontWeight: 'bold' }}>Contract Interaction</Body>
+        <Chip
+          label={'Contract Interaction'}
+          style={{
+            backgroundColor: 'lightsteelblue',
+            marginRight: 5,
+            borderRadius: 5,
+            fontWeight: 'bold',
+          }}
+          size="small"
+          onClick={() => {
+            window.open('https://koinly.io/cryptocurrency-taxes/', '_blank');
+          }}
+        />
         <Body style={{ fontWeight: 'normal' }}>
           We don't the tax status of this particular type of transaction.
         </Body>
@@ -103,7 +128,13 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
         <Body style={{ fontWeight: 'normal' }}>
           <Chip
             label={gasInfo.answer}
-            style={{ backgroundColor: gasChipColor, marginRight: 10 }}
+            style={{
+              backgroundColor: gasChipColor,
+              marginRight: 5,
+              borderRadius: 5,
+            }}
+            // variant="outlined"
+            size="small"
           />
           {gasInfo.explanation}
         </Body>
@@ -135,6 +166,8 @@ export const TaxInfoPreview = ({ transaction, show }: TaxInfoPreviewProps) => {
         disableGutters
         style={{ boxShadow: 'none', padding: 0, margin: 0 }}
         TransitionProps={{ unmountOnExit: true }}
+        expanded={showTaxInfo}
+        onChange={(event, expanded) => setShowTaxInfo(expanded)}
       >
         <AccordionSummary
         // style={{ minHeight: 0, backgroundColor: 'lightgray' }}

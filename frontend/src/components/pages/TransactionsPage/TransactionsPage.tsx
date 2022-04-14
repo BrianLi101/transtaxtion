@@ -11,6 +11,7 @@ import { PageColumn } from 'src/components/general';
 
 import { TransactionRow } from 'src/components/transaction/TransactionRow';
 
+import { TransactionListSettings } from './TransactionListSettings';
 import { Page } from '../styled';
 
 export const TransactionsPage: React.FC = () => {
@@ -20,6 +21,7 @@ export const TransactionsPage: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>();
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [showAllTaxInfo, setShowAllTaxInfo] = useState<boolean>(false);
   const { address } = useParams();
   let walletAddress = address!;
 
@@ -107,12 +109,17 @@ export const TransactionsPage: React.FC = () => {
         return <p>{JSON.stringify(t)}</p>;
       })}
       <PageColumn style={{ width: '90%', minWidth: 1000 }}>
+        <TransactionListSettings
+          showAllTaxInfo={showAllTaxInfo}
+          onChangeShowAllTaxInfo={(value) => setShowAllTaxInfo(value)}
+        />
         {transactions?.map((t) => {
           return (
             <TransactionRow
               key={t.hash}
               transaction={t}
               myAddress={walletAddress}
+              showTaxInfo={showAllTaxInfo}
             />
           );
         })}

@@ -24,6 +24,7 @@ import { TransactionRowProps } from './types';
 export const TransactionRow = ({
   transaction,
   myAddress,
+  showTaxInfo,
 }: TransactionRowProps) => {
   let fromMe = isSameEthereumAddress(transaction.from, myAddress);
   let inOrOut = fromMe ? 'Out' : 'In';
@@ -171,7 +172,7 @@ export const TransactionRow = ({
       </HFlex>
       {/* <p>{JSON.stringify(transaction)}</p> */}
       {/* <p>input: {transaction.input}</p> */}
-      <TaxInfoPreview show transaction={transaction} />
+      <TaxInfoPreview show={showTaxInfo} transaction={transaction} />
     </TransactionRowContainer>
   );
 };
