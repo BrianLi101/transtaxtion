@@ -12,6 +12,7 @@ export const TransactionListSettings = ({
       <FormControlLabel
         control={
           <Checkbox
+            defaultChecked={showAllTaxInfo}
             value={showAllTaxInfo}
             onChange={(event, checked) => onChangeShowAllTaxInfo(checked)}
           />

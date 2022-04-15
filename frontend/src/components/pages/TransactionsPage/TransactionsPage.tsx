@@ -21,7 +21,7 @@ export const TransactionsPage: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [showAllTaxInfo, setShowAllTaxInfo] = useState<boolean>(false);
+  const [showAllTaxInfo, setShowAllTaxInfo] = useState<boolean>(true);
   const { address } = useParams();
   let walletAddress = address!;
 
