@@ -27,7 +27,8 @@ function App() {
     <div className="App">
       <Helmet
         encodeSpecialCharacters={true}
-        titleTemplate="transtaxtion"
+        titleTemplate="transtaxtion - %s"
+        defaultTitle="transtaxtion"
         defer={false}
       >
         <meta charSet="utf-8" />
@@ -41,6 +42,9 @@ function App() {
         />
         <meta property="og:url" content="https://transtaxtion.com/" />
         <meta property="og:type" content="website" />
+        <meta property="og:image" content="%PUBLIC_URL%/logo192.png" />
+        <meta property="og:image:url" content="%PUBLIC_URL%/logo192.png" />
+        <meta property="og:image:alt" content="Visit Transtaxtion.com" />
 
         <meta property="twitter:card" content="summary" />
         <meta property="twitter:title" content="transtaxtion" />
@@ -48,6 +52,7 @@ function App() {
           name="twitter:description"
           content="learn about how your ethereum transactions are taxed"
         />
+        <meta property="twitter:image" content="%PUBLIC_URL%/logo192.png" />
 
         <title>transtaxtion</title>
       </Helmet>
