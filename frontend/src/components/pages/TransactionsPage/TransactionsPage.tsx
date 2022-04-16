@@ -108,7 +108,9 @@ export const TransactionsPage: React.FC = () => {
       {nftTransfers?.map((t) => {
         return <p>{JSON.stringify(t)}</p>;
       })}
-      <PageColumn style={{ width: '90%', minWidth: 1000 }}>
+      <PageColumn
+      // style={{ width: '90%', minWidth: 1000 }}
+      >
         <TransactionListSettings
           showAllTaxInfo={showAllTaxInfo}
           onChangeShowAllTaxInfo={(value) => setShowAllTaxInfo(value)}

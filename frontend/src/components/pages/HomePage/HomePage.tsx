@@ -23,7 +23,7 @@ export const HomePage = () => {
             transtaxtion
           </Typography>
           <Typography variant="h6" style={{ marginBottom: 20 }}>
-            learn about how your transactions are taxed
+            learn about how your ethereum transactions are taxed
           </Typography>
           <SearchBar />
           <Button

@@ -139,6 +139,7 @@ export const TransactionRow = ({
           paddingTop: 10,
           paddingBottom: 10,
           minHeight: 100,
+          flexWrap: 'wrap',
         }}
       >
         <VFlex
@@ -149,20 +150,24 @@ export const TransactionRow = ({
             <TransactionTypePreview type={transaction.transactionType} />
           </VFlex>
         </VFlex>
-        <VFlex style={{ flex: 3, alignItems: 'center' }}>
-          {/* <AddressPreview
+        <HFlex
+          style={{ flex: 6, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <VFlex style={{ flex: 1, alignItems: 'center' }}>
+            {/* <AddressPreview
             address={fromMe ? transaction.from : transaction.to}
             myAddress={myAddress}
           /> */}
-          {fromMe ? renderOutTxn() : renderInTxn()}
-          {fromMe ? renderInTxn() : renderOutTxn()}
-        </VFlex>
-        <VFlex style={{ flex: 3, paddingLeft: 20 }}>
-          <AddressPreview
-            address={fromMe ? transaction.to : transaction.from}
-            myAddress={myAddress}
-          />
-        </VFlex>
+            {fromMe ? renderOutTxn() : renderInTxn()}
+            {fromMe ? renderInTxn() : renderOutTxn()}
+          </VFlex>
+          <VFlex style={{ flex: 1, paddingLeft: 20 }}>
+            <AddressPreview
+              address={fromMe ? transaction.to : transaction.from}
+              myAddress={myAddress}
+            />
+          </VFlex>
+        </HFlex>
         <VFlex style={{ flex: 1 }}>
           <GasPreview
             transactionFee={transaction.transactionFee || 0}
