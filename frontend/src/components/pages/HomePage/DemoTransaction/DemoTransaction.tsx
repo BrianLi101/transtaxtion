@@ -40,6 +40,7 @@ export const DemoTransaction = () => {
     <TransactionRow
       transaction={NFT_PURCHASE_TRANSACTION}
       myAddress={DEMO_WALLET_ADDRESS}
+      showTaxInfo={true}
     />
   );
 };
