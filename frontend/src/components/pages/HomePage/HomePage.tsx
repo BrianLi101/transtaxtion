@@ -25,14 +25,17 @@ export const HomePage = () => {
           <Typography variant="h6" style={{ marginBottom: 20 }}>
             learn about how your ethereum transactions are taxed
           </Typography>
-          <SearchBar />
-          <Button
-            onClick={() => {
-              navigate('/address/' + DEMO_WALLET_ADDRESS);
-            }}
-          >
-            See Demo
-          </Button>
+          <div style={{ width: '80%', maxWidth: 600, margin: 'auto' }}>
+            <SearchBar />
+            <Button
+              onClick={() => {
+                navigate('/address/' + DEMO_WALLET_ADDRESS);
+              }}
+            >
+              See Demo
+            </Button>
+          </div>
+          <div style={{ height: 50 }} />
           <DemoTransaction />
         </PageColumn>
       </HomePageBody>
