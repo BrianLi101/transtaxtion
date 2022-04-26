@@ -1,6 +1,8 @@
 # transtaxtion
 
-transtaxtion provides human-readable explanations for what is taxable on your crypto transactions.
+transtaxtion provides human-readable explanations for what is taxable on your crypto transactions. Try it out [here](https://transtaxtion.com/)!
+
+![Home Page](assets/HomePageScreenshot.png)
 
 At the moment, it only covers the most basic cases for newer adopters of crypto:
 
